@@ -35,12 +35,8 @@ def remove_special_characters(text, remove_digits=False):
 
 def lemmatize_text(text):
     text = nlp(text)
-    text = ' '.join([word.lemma_ if word.lemma_ != '-PRON' else word.text for word in text])
-    print(type(text))
+    text = ' '.join([word.lemma_ if word.lemma_ != '-PRON-' else word.text for word in text])
     return text
-
-
-lemmatize_text("My system keeps crashing! his crashed yesterday, ours crashes daily")
 
 
 def simple_stemmer(text):
@@ -48,7 +44,15 @@ def simple_stemmer(text):
     text = ' '.join([ps.stem(word) for word in text.split()])
     return text
 
-print(simple_stemmer("My system keeps crashing his crashed yesterday, ours crashes daily"))
 
-print(' '.join([1, 2, 3]))
-print(' '.join([1, 2, 3]))
+def remove_stopwords(text, tokenizer,  is_lower_case=False):
+    tokens = tokenizer.tokenize(text)
+    tokens = [token.strip() for token in tokens]
+    if is_lower_case:
+        filtered_tokens = [token for token in tokens if token not in stopword_list]
+    else:
+        filtered_tokens = [token for token in tokens if token.lower() not in stopword_list]
+    filtered_text = ' '.join(filtered_tokens)    
+    return filtered_text
+
+remove_stopwords("The, and, if are stopwords, computer is not")
