@@ -12,7 +12,6 @@ nlp = spacy.load('en_core_web_lg', parse=True, tag=True, entity=True)
 
 def strip_html_tags(text):
     soup = BeautifulSoup(text, 'html.parser')
-    print(soup)
     stripped_text = soup.get_text()
     return stripped_text
 
@@ -56,7 +55,7 @@ def remove_stopwords(text, tokenizer, stopword_list,  is_lower_case=False):
     return filtered_text
 
 
-def normalize_corpus(corpus, html_stripping=True, contraction_expansion=True,
+def normalize_corpus(corpus, tokenizer, stopword_list, html_stripping=True, contraction_expansion=True,
                      accented_char_removal=True, text_lower_case=True, 
                      text_lemmatization=True, special_char_removal=True, 
                      stopword_removal=True, remove_digits=True):
@@ -91,7 +90,7 @@ def normalize_corpus(corpus, html_stripping=True, contraction_expansion=True,
         doc = re.sub(' +', ' ', doc)
         # remove stopwords
         if stopword_removal:
-            doc = remove_stopwords(doc, is_lower_case=text_lower_case)
+            doc = remove_stopwords(doc, tokenizer, stopword_list, is_lower_case=text_lower_case)
             
         normalized_corpus.append(doc)
         
