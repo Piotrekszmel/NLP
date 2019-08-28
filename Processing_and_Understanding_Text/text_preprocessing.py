@@ -20,3 +20,8 @@ def remove_accented_chars(text):
     return text
 
 
+def expand_contractions(text):
+    text = contractions.fix(text)
+    return text
+
+
