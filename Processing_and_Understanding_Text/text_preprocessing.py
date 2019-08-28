@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 import contractions
 import unicodedata
 
+nlp = spacy.load('en_core_web_lg', parse=True, tag=True, entity=True)
+
 def strip_html_tags(text):
     soup = BeautifulSoup(text, 'html.parser')
     print(soup)
@@ -31,5 +33,22 @@ def remove_special_characters(text, remove_digits=False):
     return text
 
 
-print(remove_special_characters("Well this was fun! What do you think? 123#@!", 
-                          remove_digits=True))
+def lemmatize_text(text):
+    text = nlp(text)
+    text = ' '.join([word.lemma_ if word.lemma_ != '-PRON' else word.text for word in text])
+    print(type(text))
+    return text
+
+
+lemmatize_text("My system keeps crashing! his crashed yesterday, ours crashes daily")
+
+
+def simple_stemmer(text):
+    ps = nltk.PorterStemmer()
+    text = ' '.join([ps.stem(word) for word in text.split()])
+    return text
+
+print(simple_stemmer("My system keeps crashing his crashed yesterday, ours crashes daily"))
+
+print(' '.join([1, 2, 3]))
+print(' '.join([1, 2, 3]))
