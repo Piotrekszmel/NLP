@@ -14,8 +14,6 @@ def combined_tagger(train_data, taggers, backoff=None):
     return backoff
 
 
-
-
 class NGramTagChunker(ChunkParserI):
     
     def __init__(self, train_sentences, tagger_classes=[UnigramTagger, BigramTagger]):
