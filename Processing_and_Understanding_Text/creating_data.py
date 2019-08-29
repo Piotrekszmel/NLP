@@ -17,7 +17,6 @@ seed_urls = ['https://inshorts.com/en/read/technology',
 
 news_df = build_dataset(seed_urls)
 
-
 news_df['full_text'] = news_df['news_headline'].map(str)+ ' ' + news_df['news_article']
 news_df['clean_text'] = normalize_corpus(news_df['full_text'], tokenizer=tokenizer, stopword_list=stopwords_list)
 norm_corpus = list(news_df['clean_text'])
